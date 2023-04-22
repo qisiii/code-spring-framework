@@ -38,6 +38,7 @@ class BeanNameAutoProxyCreatorInitTests {
 
 	@Test
 	void ignoreAdvisorThatIsCurrentlyInCreation() {
+		//first就从这里开始吧
 		ClassPathXmlApplicationContext ctx =
 				new ClassPathXmlApplicationContext(getClass().getSimpleName() + "-context.xml", getClass());
 

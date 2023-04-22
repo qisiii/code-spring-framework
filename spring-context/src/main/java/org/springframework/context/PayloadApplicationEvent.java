@@ -33,6 +33,9 @@ import org.springframework.util.Assert;
  * @see ApplicationListener#forPayload(Consumer)
  */
 @SuppressWarnings("serial")
+//Q&A 2023/4/22
+// Q:有意思的类，待研究
+// A:
 public class PayloadApplicationEvent<T> extends ApplicationEvent implements ResolvableTypeProvider {
 
 	private final T payload;

@@ -38,7 +38,7 @@ public interface ApplicationEventPublisher {
 	 * application of an application event. Events may be framework events
 	 * (such as ContextRefreshedEvent) or application-specific events.
 	 * <p>Such an event publication step is effectively a hand-off to the
-	 * multicaster and does not imply synchronous/asynchronous execution
+	 * multicaster（实际上是像多播转移） and does not imply synchronous/asynchronous execution
 	 * or even immediate execution at all. Event listeners are encouraged
 	 * to be as efficient as possible, individually using asynchronous
 	 * execution for longer-running and potentially blocking operations.
