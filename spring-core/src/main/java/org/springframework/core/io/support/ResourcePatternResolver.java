@@ -57,6 +57,7 @@ import org.springframework.core.io.ResourceLoader;
 public interface ResourcePatternResolver extends ResourceLoader {
 
 	/**
+	 * classpath*:还要去jar包的target去找
 	 * Pseudo URL prefix for all matching resources from the class path: "classpath*:"
 	 * <p>This differs from ResourceLoader's classpath URL prefix in that it
 	 * retrieves all matching resources for a given name (e.g. "/beans.xml"),

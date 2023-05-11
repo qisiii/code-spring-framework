@@ -94,7 +94,7 @@ import org.springframework.lang.Nullable;
  * <li>DisposableBean's {@code destroy}
  * <li>a custom {@code destroy-method} definition
  * </ol>
- *
+ * bean的生命周期
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Chris Beams
@@ -161,7 +161,7 @@ public interface BeanFactory {
 
 	/**
 	 * Return an instance, which may be shared or independent, of the specified bean.
-	 * <p>Allows for specifying explicit constructor arguments / factory method arguments,
+	 * <p>Allows for specifying explicit constructor arguments(指定构建函数的参数) / factory method arguments,
 	 * overriding the specified default arguments (if any) in the bean definition.
 	 * @param name the name of the bean to retrieve
 	 * @param args arguments to use when creating a bean instance using explicit arguments
@@ -304,7 +304,7 @@ public interface BeanFactory {
 	 * <p>Translates aliases back to the corresponding canonical bean name.
 	 * <p>Will ask the parent factory if the bean cannot be found in this factory instance.
 	 * @param name the name of the bean to query
-	 * @param typeToMatch the type to match against (as a {@code ResolvableType})
+	 * @param typeToMatch the type to match against (as a {@code ResolvableType（泛型类）})
 	 * @return {@code true} if the bean type matches,
 	 * {@code false} if it doesn't match or cannot be determined yet
 	 * @throws NoSuchBeanDefinitionException if there is no bean with the given name

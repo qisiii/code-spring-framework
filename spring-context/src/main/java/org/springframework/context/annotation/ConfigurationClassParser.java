@@ -254,6 +254,7 @@ class ConfigurationClassParser {
 	}
 
 	/**
+	 * 处理配置bean核心类
 	 * Apply processing and build a complete {@link ConfigurationClass} by reading the
 	 * annotations, members and methods from the source class. This method can be called
 	 * multiple times as relevant sources are discovered.
