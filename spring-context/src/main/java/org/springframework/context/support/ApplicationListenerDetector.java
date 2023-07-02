@@ -60,6 +60,7 @@ class ApplicationListenerDetector implements DestructionAwareBeanPostProcessor, 
 	@Override
 	public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class<?> beanType, String beanName) {
 		if (ApplicationListener.class.isAssignableFrom(beanType)) {
+			//获取beanDefinition是否单例
 			this.singletonNames.put(beanName, beanDefinition.isSingleton());
 		}
 	}
@@ -79,6 +80,7 @@ class ApplicationListenerDetector implements DestructionAwareBeanPostProcessor, 
 				this.applicationContext.addApplicationListener((ApplicationListener<?>) bean);
 			}
 			else if (Boolean.FALSE.equals(flag)) {
+				//实现ApplicationListener但不是单例不会被广播
 				if (logger.isWarnEnabled() && !this.applicationContext.containsBean(beanName)) {
 					// inner bean with other scope - can't reliably process events
 					logger.warn("Inner bean '" + beanName + "' implements ApplicationListener interface " +
