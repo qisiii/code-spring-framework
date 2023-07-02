@@ -75,6 +75,7 @@ public class ClassPathXmlApplicationContextTests {
 
 	@Test
 	void singleConfigLocation() {
+		//从这里开始了解spring流程
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(FQ_SIMPLE_CONTEXT);
 		assertThat(ctx.containsBean("someMessageSource")).isTrue();
 		ctx.close();

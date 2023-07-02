@@ -46,6 +46,10 @@ import org.springframework.util.StringUtils;
  * @see FileSystemResourceLoader
  * @see org.springframework.context.support.ClassPathXmlApplicationContext
  */
+
+/**
+ * 处理导入的资源，转为对应的java类型
+ */
 public class DefaultResourceLoader implements ResourceLoader {
 
 	@Nullable

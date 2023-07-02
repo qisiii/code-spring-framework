@@ -37,6 +37,10 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.context.support.ResourceBundleMessageSource
  * @see org.springframework.context.support.ReloadableResourceBundleMessageSource
  */
+
+/**
+ * 国际化能力
+ */
 public interface MessageSource {
 
 	/**

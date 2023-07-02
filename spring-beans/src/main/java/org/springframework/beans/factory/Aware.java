@@ -32,6 +32,10 @@ package org.springframework.beans.factory;
  * @author Juergen Hoeller
  * @since 3.1
  */
+
+/**
+ * 一个标记，使用者需要自己继承，并实现其通知能力
+ */
 public interface Aware {
 
 }

@@ -29,12 +29,12 @@ import org.springframework.lang.Nullable;
  * by name one by one as requested by clients. BeanFactory implementations that
  * preload all their bean definitions (such as XML-based factories) may implement
  * this interface.
- *
+ * 如果是层级结构，那依然获取不到所有层级的，只能获取当前级别的
  * <p>If this is a {@link HierarchicalBeanFactory}, the return values will <i>not</i>
  * take any BeanFactory hierarchy into account, but will relate only to the beans
  * defined in the current factory. Use the {@link BeanFactoryUtils} helper class
  * to consider beans in ancestor factories too.
- *
+ * 手动注册的bean可能不太会考虑到
  * <p>The methods in this interface will just respect bean definitions of this factory.
  * They will ignore any singleton beans that have been registered by other means like
  * {@link org.springframework.beans.factory.config.ConfigurableBeanFactory}'s
@@ -54,6 +54,10 @@ import org.springframework.lang.Nullable;
  * @since 16 April 2001
  * @see HierarchicalBeanFactory
  * @see BeanFactoryUtils
+ */
+
+/**
+ * 返回的就是多个结果[数组]，而不是像beanFactory那里一个一次一个
  */
 public interface ListableBeanFactory extends BeanFactory {
 

@@ -17,6 +17,7 @@
 package org.springframework.core.env;
 
 /**
+ * applicationContext基本上都带有环境能力，甚至有些有可配置环境的能力
  * Interface indicating a component that contains and exposes an {@link Environment} reference.
  *
  * <p>All Spring application contexts are EnvironmentCapable, and the interface is used primarily

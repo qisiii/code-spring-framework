@@ -28,7 +28,7 @@ import org.springframework.lang.Nullable;
  * This is read-only while the application is running, but may be
  * reloaded if the implementation supports this.
  *
- * <p>An ApplicationContext provides:
+ * <p>An ApplicationContext provides: bean访问、配置文件、事件发布、环境管理、国际化
  * <ul>
  * <li>Bean factory methods for accessing application components.
  * Inherited from {@link org.springframework.beans.factory.ListableBeanFactory}.
@@ -90,8 +90,11 @@ public interface ApplicationContext extends EnvironmentCapable, ListableBeanFact
 	 */
 	@Nullable
 	ApplicationContext getParent();
-
+	//Q&A 2023/7/2
+	// Q:暴露出去的方法，用于初始化spring上下文外的bean,待研究
+	// A:
 	/**
+	 *
 	 * Expose AutowireCapableBeanFactory functionality for this context.
 	 * <p>This is not typically used by application code, except for the purpose of
 	 * initializing bean instances that live outside the application context,

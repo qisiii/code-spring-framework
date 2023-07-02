@@ -49,6 +49,10 @@ import org.springframework.util.Assert;
  * @see #getResourceByPath
  * @see GenericApplicationContext
  */
+
+/**
+ * 从UML图中可以分析出，要了解这个类就必须学习{@link AbstractApplicationContext}
+ */
 public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContext {
 
 	@Nullable

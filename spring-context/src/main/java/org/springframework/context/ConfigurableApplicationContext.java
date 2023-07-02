@@ -29,8 +29,8 @@ import org.springframework.lang.Nullable;
 
 /**
  * SPI interface to be implemented by most if not all application contexts.
- * Provides facilities to configure an application context in addition
- * to the application context client methods in the
+ * Provides facilities（工具，设施） to configure an application context in addition
+ * to（除了） the application context client methods in the
  * {@link org.springframework.context.ApplicationContext} interface.
  *
  * <p>Configuration and lifecycle methods are encapsulated here to avoid
@@ -41,6 +41,10 @@ import org.springframework.lang.Nullable;
  * @author Chris Beams
  * @author Sam Brannen
  * @since 03.11.2003
+ */
+
+/**
+ * 可装配的applicationContext，支持我们添加一些组件
  */
 public interface ConfigurableApplicationContext extends ApplicationContext, Lifecycle, Closeable {
 

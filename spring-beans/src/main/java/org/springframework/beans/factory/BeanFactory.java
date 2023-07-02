@@ -27,7 +27,7 @@ import org.springframework.lang.Nullable;
  * further interfaces such as {@link ListableBeanFactory} and
  * {@link org.springframework.beans.factory.config.ConfigurableBeanFactory}
  * are available for specific purposes.
- *
+ * 返回原型或者单例，2.0以后支持了request和session级别
  * <p>This interface is implemented by objects that hold a number of bean definitions,
  * each uniquely identified by a String name. Depending on the bean definition,
  * the factory will return either an independent instance of a contained object
@@ -43,7 +43,7 @@ import org.springframework.lang.Nullable;
  * components (no more do individual objects need to read properties files,
  * for example). See chapters 4 and 11 of "Expert One-on-One J2EE Design and
  * Development" for a discussion of the benefits of this approach.
- *
+ * 多使用依赖注入而不是beanFactory.get()
  * <p>Note that it is generally better to rely on Dependency Injection
  * ("push" configuration) to configure application objects through setters
  * or constructors, rather than use any form of "pull" configuration like a
@@ -57,13 +57,13 @@ import org.springframework.lang.Nullable;
  * constraints on how the definitions could be stored: LDAP, RDBMS, XML,
  * properties file, etc. Implementations are encouraged to support references
  * amongst beans (Dependency Injection).
- *
+ * 如果在当前工厂没找到，那就会去父工厂找
  * <p>In contrast to the methods in {@link ListableBeanFactory}, all of the
  * operations in this interface will also check parent factories if this is a
  * {@link HierarchicalBeanFactory}. If a bean is not found in this factory instance,
  * the immediate parent factory will be asked. Beans in this factory instance
  * are supposed to override beans of the same name in any parent factory.
- *
+ * bean的生命周期
  * <p>Bean factory implementations should support the standard bean lifecycle interfaces
  * as far as possible. The full set of initialization methods and their standard order is:
  * <ol>
@@ -94,7 +94,7 @@ import org.springframework.lang.Nullable;
  * <li>DisposableBean's {@code destroy}
  * <li>a custom {@code destroy-method} definition
  * </ol>
- * bean的生命周期
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Chris Beams
@@ -116,6 +116,18 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.beans.factory.config.DestructionAwareBeanPostProcessor#postProcessBeforeDestruction
  * @see DisposableBean#destroy
  * @see org.springframework.beans.factory.support.RootBeanDefinition#getDestroyMethodName
+ */
+
+/**
+ * BeanFactory,Spring容器的根接口，常用的三个子接口
+ * {@link HierarchicalBeanFactory（扩展为父子层级）}
+ * {@link ListableBeanFactory（扩展为获取多个）}
+ * {@link org.springframework.beans.factory.config.ConfigurableBeanFactory（可配置，没有细看）}
+ * 根据名称、类型获取bean
+ * 根据名称、类型获取bean，可以传递构造参数覆盖本来的参数
+ * 可以返回BeanProvider，将查找bean的实际操作延后，在provider.getObject时触发
+ * 是否是单例、原型
+ * 返回别名
  */
 public interface BeanFactory {
 
