@@ -555,8 +555,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 			// Tell the subclass to refresh the internal bean factory.
 			//初始化工厂(DefaultListableBeanFactory)
-			//对于xml定义的bean，会在这里注册beanDefinition
-			//对于通过Configuration定义的bean，则会通过org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor#postProcessBeanDefinitionRegistry处理
+			//对于xml定义的bean，会在这里注册beanDefinition，其他的bean会在invokeBeanFactoryPostProcessors这里的后处理器定义
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
@@ -571,11 +570,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				StartupStep beanPostProcess = this.applicationStartup.start("spring.context.beans.post-process");
 				// Invoke factory processors registered as beans in the context.
-				// 处理实现了BeanFactoryPostProcessor的bean，调用其postProcessBeanDefinitionRegistry，注册bean
+				// 注册通过注解和import机制自定义的beanDefinition，处理实现了BeanFactoryPostProcessor的bean，调用其postProcessBeanDefinitionRegistry
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
-				// 注册实现了BeanPostProcessor的bean的处理器，这里面的方法我好想看过
+				// 注册实现了BeanPostProcessor的bean的处理器
 				registerBeanPostProcessors(beanFactory);
 				beanPostProcess.end();
 
@@ -911,6 +910,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Publish early application events now that we finally have a multicaster...
+		//在多播器启动之前也可以广播事件，先收集起来，在注册完监听器后再发布一次
 		Set<ApplicationEvent> earlyEventsToProcess = this.earlyApplicationEvents;
 		this.earlyApplicationEvents = null;
 		if (!CollectionUtils.isEmpty(earlyEventsToProcess)) {
