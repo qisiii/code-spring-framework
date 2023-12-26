@@ -1,6 +1,8 @@
 package org.springframework.note;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class NoteComponent {
+	@Autowired
+	private NoteA noteA;
 	@Bean
 	public NoteSecond noteSecond(){
 		return new NoteSecond();

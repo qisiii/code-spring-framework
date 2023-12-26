@@ -155,8 +155,10 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		Assert.notNull(singletonFactory, "Singleton factory must not be null");
 		synchronized (this.singletonObjects) {
 			if (!this.singletonObjects.containsKey(beanName)) {
+				//singleFactories才是第一次塞进去的
 				this.singletonFactories.put(beanName, singletonFactory);
 				this.earlySingletonObjects.remove(beanName);
+				//还有这个set，有啥用？
 				this.registeredSingletons.add(beanName);
 			}
 		}
@@ -179,18 +181,22 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	@Nullable
 	protected Object getSingleton(String beanName, boolean allowEarlyReference) {
 		// Quick check for existing instance without full singleton lock
-		// 这是在createBean完之后塞到singletonObjects里面的
+		// 一级缓存
+		// 这是在createBean完之后塞到singletonObjects里面的,所以对于循环依赖的来说，这里一定为空
 		Object singletonObject = this.singletonObjects.get(beanName);
 		//isSingletonCurrentlyInCreation是指正在创建
 		if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
+			//二级缓存
 			singletonObject = this.earlySingletonObjects.get(beanName);
 			if (singletonObject == null && allowEarlyReference) {
 				synchronized (this.singletonObjects) {
+					//获取锁之后再校验一次一级缓存和二级缓存
 					// Consistent creation of early reference within full singleton lock
 					singletonObject = this.singletonObjects.get(beanName);
 					if (singletonObject == null) {
 						singletonObject = this.earlySingletonObjects.get(beanName);
 						if (singletonObject == null) {
+							//doCreateBean实例化之后，填充前塞进去的
 							ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
 							if (singletonFactory != null) {
 								singletonObject = singletonFactory.getObject();
