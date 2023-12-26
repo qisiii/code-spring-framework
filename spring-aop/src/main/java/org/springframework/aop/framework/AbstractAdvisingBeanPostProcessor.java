@@ -82,7 +82,7 @@ public abstract class AbstractAdvisingBeanPostProcessor extends ProxyProcessorSu
 				return bean;
 			}
 		}
-
+		//如果是aop代理的
 		if (isEligible(bean, beanName)) {
 			ProxyFactory proxyFactory = prepareProxyFactory(bean, beanName);
 			if (!proxyFactory.isProxyTargetClass()) {

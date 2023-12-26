@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.note.NoteAnnotationConfig;
+import org.springframework.note.NoteComponent;
 import org.springframework.note.NoteEvent;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +28,8 @@ public class SpringCodeSourceLearnTests {
 	void annotationConfigLocation() {
 		//通过注解配置spring容器
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(NoteAnnotationConfig.class);
-		ctx.publishEvent(new NoteEvent("event"));
+		ctx.getBean(NoteComponent.class).test();
+//		ctx.publishEvent(new NoteEvent("event"));
 		assertThat(ctx.containsBean("noteFirst")).isTrue();
 		assertThat(ctx.containsBean("noteBean")).isTrue();
 		ctx.close();

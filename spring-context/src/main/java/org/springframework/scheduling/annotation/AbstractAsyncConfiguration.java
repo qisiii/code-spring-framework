@@ -57,6 +57,7 @@ public abstract class AbstractAsyncConfiguration implements ImportAware {
 
 
 	@Override
+	//记录一下元数据而已
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
 		this.enableAsync = AnnotationAttributes.fromMap(
 				importMetadata.getAnnotationAttributes(EnableAsync.class.getName()));
@@ -67,6 +68,7 @@ public abstract class AbstractAsyncConfiguration implements ImportAware {
 	}
 
 	/**
+	 * 只是为了设置线程池和异常处理器
 	 * Collect any {@link AsyncConfigurer} beans through autowiring.
 	 */
 	@Autowired

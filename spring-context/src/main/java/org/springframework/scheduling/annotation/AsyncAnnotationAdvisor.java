@@ -93,7 +93,7 @@ public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements B
 	@SuppressWarnings("unchecked")
 	public AsyncAnnotationAdvisor(
 			@Nullable Supplier<Executor> executor, @Nullable Supplier<AsyncUncaughtExceptionHandler> exceptionHandler) {
-
+		//默认应该是@Async和@Asynchronous注解，但可以调用setAsyncAnnotationType来覆盖
 		Set<Class<? extends Annotation>> asyncAnnotationTypes = new LinkedHashSet<>(2);
 		asyncAnnotationTypes.add(Async.class);
 		try {
