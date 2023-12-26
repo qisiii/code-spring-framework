@@ -529,8 +529,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		try {
 			// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
-			//返回代理而不是原实例bean
-			//这里aop会调用AbstractAutoProxyCreator#postProcessBeforeInstantiation
+			// 如果定义了TargetSource，那么就会调用AbstractAutoProxyCreator#postProcessBeforeInstantiation立即生成代理对象，然后返回；
+			// 正常情况aop是不走的，是在postProcessAfterInitialization生成的对象
+			//before实例化
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {
 				return bean;
@@ -595,7 +596,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		synchronized (mbd.postProcessingLock) {
 			if (!mbd.postProcessed) {
 				try {
-					//这里的后处理器是干啥的，这时候了为什么还要修改beanDefinition，依赖注入是不是这里啊
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}
 				catch (Throwable ex) {
@@ -623,8 +623,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// Initialize the bean instance.
 		Object exposedObject = bean;
 		try {
-			//填充bean
+			//填充bean，完善Bean的信息，包括注入依赖的Bean, 则会递归初始化依赖 bean
 			populateBean(beanName, mbd, instanceWrapper);
+			//初始化bean，这里会正常增强那些需要代理的bean
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		}
 		catch (Throwable ex) {
@@ -1407,6 +1408,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// to support styles of field injection.
 		if (!mbd.isSynthetic() && hasInstantiationAwareBeanPostProcessors()) {
 			for (InstantiationAwareBeanPostProcessor bp : getBeanPostProcessorCache().instantiationAware) {
+				//after实例化
+				//这里进行依赖注入
 				if (!bp.postProcessAfterInstantiation(bw.getWrappedInstance(), beanName)) {
 					return;
 				}
@@ -1803,10 +1806,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		Object wrappedBean = bean;
 		if (mbd == null || !mbd.isSynthetic()) {
+			//before初始化
 			wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
 		}
 
 		try {
+			//这里面是afterPropertiesSet和init()
 			invokeInitMethods(beanName, wrappedBean, mbd);
 		}
 		catch (Throwable ex) {
@@ -1816,6 +1821,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 		if (mbd == null || !mbd.isSynthetic()) {
 			//代理加强在这个方法内
+			//after初始化
 			wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
 		}
 

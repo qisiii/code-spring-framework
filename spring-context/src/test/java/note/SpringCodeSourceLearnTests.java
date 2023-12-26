@@ -28,7 +28,7 @@ public class SpringCodeSourceLearnTests {
 	void annotationConfigLocation() {
 		//通过注解配置spring容器
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(NoteAnnotationConfig.class);
-		ctx.getBean(NoteComponent.class).test();
+		ctx.getBean(NoteComponent.class).noteSecond();
 //		ctx.publishEvent(new NoteEvent("event"));
 		assertThat(ctx.containsBean("noteFirst")).isTrue();
 		assertThat(ctx.containsBean("noteBean")).isTrue();
