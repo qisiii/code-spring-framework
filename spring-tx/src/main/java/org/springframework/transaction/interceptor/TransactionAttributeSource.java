@@ -48,6 +48,7 @@ public interface TransactionAttributeSource {
 	 * attributes at class or method level; {@code true} otherwise. The default
 	 * implementation returns {@code true}, leading to regular introspection.
 	 * @since 5.2
+	 * 类级别的校验
 	 */
 	default boolean isCandidateClass(Class<?> targetClass) {
 		return true;
@@ -60,6 +61,7 @@ public interface TransactionAttributeSource {
 	 * @param targetClass the target class (may be {@code null},
 	 * in which case the declaring class of the method must be used)
 	 * @return the matching transaction attribute, or {@code null} if none found
+	 * 方法级别
 	 */
 	@Nullable
 	TransactionAttribute getTransactionAttribute(Method method, @Nullable Class<?> targetClass);

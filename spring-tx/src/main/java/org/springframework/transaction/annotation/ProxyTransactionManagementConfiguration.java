@@ -43,10 +43,11 @@ public class ProxyTransactionManagementConfiguration extends AbstractTransaction
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public BeanFactoryTransactionAttributeSourceAdvisor transactionAdvisor(
 			TransactionAttributeSource transactionAttributeSource, TransactionInterceptor transactionInterceptor) {
-
+		//组合了切面和建议
 		BeanFactoryTransactionAttributeSourceAdvisor advisor = new BeanFactoryTransactionAttributeSourceAdvisor();
 		advisor.setTransactionAttributeSource(transactionAttributeSource);
 		advisor.setAdvice(transactionInterceptor);
+		//代理顺序是最低级，所以最先进行代理
 		if (this.enableTx != null) {
 			advisor.setOrder(this.enableTx.<Integer>getNumber("order"));
 		}
@@ -56,12 +57,14 @@ public class ProxyTransactionManagementConfiguration extends AbstractTransaction
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TransactionAttributeSource transactionAttributeSource() {
+		//本质就是一个切面，定义解析器来判断bean是否符合要求
 		return new AnnotationTransactionAttributeSource();
 	}
 
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TransactionInterceptor transactionInterceptor(TransactionAttributeSource transactionAttributeSource) {
+		//当符合切面条件之后，通过拦截器进行代理
 		TransactionInterceptor interceptor = new TransactionInterceptor();
 		interceptor.setTransactionAttributeSource(transactionAttributeSource);
 		if (this.txManager != null) {

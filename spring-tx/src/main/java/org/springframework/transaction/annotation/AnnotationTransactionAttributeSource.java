@@ -88,6 +88,7 @@ public class AnnotationTransactionAttributeSource extends AbstractFallbackTransa
 	 * the {@code Transactional} annotation only (typically for use
 	 * with proxy-based AOP), or protected/private methods as well
 	 * (typically used with AspectJ class weaving)
+	 * 是否只支持public方法
 	 */
 	public AnnotationTransactionAttributeSource(boolean publicMethodsOnly) {
 		this.publicMethodsOnly = publicMethodsOnly;
@@ -139,6 +140,7 @@ public class AnnotationTransactionAttributeSource extends AbstractFallbackTransa
 
 	@Override
 	public boolean isCandidateClass(Class<?> targetClass) {
+		//是否候选
 		for (TransactionAnnotationParser parser : this.annotationParsers) {
 			if (parser.isCandidateClass(targetClass)) {
 				return true;

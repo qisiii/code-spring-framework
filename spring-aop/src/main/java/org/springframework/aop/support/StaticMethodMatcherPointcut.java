@@ -38,6 +38,7 @@ public abstract class StaticMethodMatcherPointcut extends StaticMethodMatcher im
 	/**
 	 * Set the {@link ClassFilter} to use for this pointcut.
 	 * Default is {@link ClassFilter#TRUE}.
+	 * 恒为TRUE
 	 */
 	public void setClassFilter(ClassFilter classFilter) {
 		this.classFilter = classFilter;
