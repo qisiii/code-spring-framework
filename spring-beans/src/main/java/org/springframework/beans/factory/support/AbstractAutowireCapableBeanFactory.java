@@ -639,19 +639,24 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		if (earlySingletonExposure) {
+			//没有提前暴漏，表明没有执行过getEarlyBeanReference
 			Object earlySingletonReference = getSingleton(beanName, false);
 			if (earlySingletonReference != null) {
 				if (exposedObject == bean) {
 					exposedObject = earlySingletonReference;
 				}
+				//只有提前暴漏了，且暴漏后又被加强了才会走下面
 				else if (!this.allowRawInjectionDespiteWrapping && hasDependentBean(beanName)) {
+					//依赖了当前beanName的其他bean
 					String[] dependentBeans = getDependentBeans(beanName);
 					Set<String> actualDependentBeans = new LinkedHashSet<>(dependentBeans.length);
 					for (String dependentBean : dependentBeans) {
+						//当暴漏的bean，被其他创建完成的bean依赖了的话，其他的bean依赖的就是个错误的bean，所以等同于是异常的bean
 						if (!removeSingletonIfCreatedForTypeCheckOnly(dependentBean)) {
 							actualDependentBeans.add(dependentBean);
 						}
 					}
+					//只要有异常的bean，那就抛异常
 					if (!actualDependentBeans.isEmpty()) {
 						throw new BeanCurrentlyInCreationException(beanName,
 								"Bean with name '" + beanName + "' has been injected into other beans [" +
