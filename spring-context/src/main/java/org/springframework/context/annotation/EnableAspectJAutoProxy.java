@@ -119,6 +119,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+//在spring版本时，最方便的开启aop的方法就是通过使用@EnableAspectJAutoProxy注解，这样子就会自动注入AnnotationAwareAspectJAutoProxyCreator这个bean
 @Import(AspectJAutoProxyRegistrar.class)
 public @interface EnableAspectJAutoProxy {
 

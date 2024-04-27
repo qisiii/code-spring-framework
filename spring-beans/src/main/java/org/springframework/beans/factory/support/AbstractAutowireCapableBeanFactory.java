@@ -621,6 +621,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// Initialize the bean instance.
+		//抄一份引用，bean放到了缓存中，后面修改的都是引用，如果引用最终和本来的bean一样，则表明没有被加强
 		Object exposedObject = bean;
 		try {
 			//填充bean，完善Bean的信息，包括注入依赖的Bean, 则会递归初始化依赖 bean
@@ -640,6 +641,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		if (earlySingletonExposure) {
 			//没有提前暴漏，表明没有执行过getEarlyBeanReference
+			//只有循环依赖的情况下， A-B(放入A.getObject到缓存）-处理依赖属性B->B依赖A->处理依赖属性A->从缓存中获取并执行->这种情况才会导致第二次getSingleton拿到的是null
+			//正常非循环依赖的拿到的都是正常的bean，因为只能从一级缓存和二级缓存拿
 			Object earlySingletonReference = getSingleton(beanName, false);
 			if (earlySingletonReference != null) {
 				if (exposedObject == bean) {
